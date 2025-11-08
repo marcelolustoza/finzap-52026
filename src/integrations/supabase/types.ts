@@ -142,7 +142,6 @@ export type Database = {
           id: number
           quando: string | null
           tipo: string | null
-          tipo_despesa: string | null
           userid: string | null
           valor: number | null
         }
@@ -154,7 +153,6 @@ export type Database = {
           id?: never
           quando?: string | null
           tipo?: string | null
-          tipo_despesa?: string | null
           userid?: string | null
           valor?: number | null
         }
@@ -166,7 +164,6 @@ export type Database = {
           id?: never
           quando?: string | null
           tipo?: string | null
-          tipo_despesa?: string | null
           userid?: string | null
           valor?: number | null
         }
