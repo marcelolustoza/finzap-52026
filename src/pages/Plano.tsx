@@ -25,7 +25,7 @@ export default function Plano() {
   }
 
   const handleSubscribe = () => {
-    window.open('https://sandbox.asaas.com/c/6yc5f1jlcoe21w8b', '_blank')
+    window.open('https://sandbox.asaas.com/c/3o8hosjfll7pe605', '_blank')
   }
 
   const handleBackToLogin = () => {
@@ -78,7 +78,7 @@ export default function Plano() {
           <div className="w-full lg:min-w-[470px] mx-auto">
             <div className="text-start py-8">
               <h1 className="text-2xl font-bold text-slate-800 mb-2 dark:text-slate-300">
-                Plano Agente Financeiro – R$29,99/mês
+                Plano Agente Financeiro – R$199,99/mês
               </h1>
               <p className="text-lg text-muted-foreground mb-8">
                 Organize suas finanças de forma simples e inteligente!

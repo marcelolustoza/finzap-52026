@@ -63,11 +63,11 @@ export function SubscriptionInfo() {
 
   const fetchSubscriptionInfo = async () => {
     try {
-      const response = await fetch('https://n8n.za9.com.br/webhook-test/assinatura/info', {
+      const response = await fetch('https://projeto-1-n8n.j8z8o2.easypanel.host/webhook-test/assinatura/info', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
-          'Authorization': 'Basic bmluZWxhYnM6bmluZWxhYnMxMjMxMjM='
+          'Authorization': 'Basic ' + btoa('12345678:123456789')
         },
         body: new URLSearchParams({
           subscription: assinaturaId!
