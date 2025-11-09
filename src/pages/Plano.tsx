@@ -25,7 +25,7 @@ export default function Plano() {
   }
 
   const handleSubscribe = () => {
-    window.open('https://sandbox.asaas.com/c/3o8hosjfll7pe605', '_blank')
+    window.open('https://sandbox.asaas.com/c/vvhakerzsv3fr404', '_blank')
   }
 
   const handleBackToLogin = () => {
