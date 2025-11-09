@@ -8,6 +8,8 @@ import { ReportFiltersComponent } from '@/components/reports/ReportFilters'
 import { ReportSummary } from '@/components/reports/ReportSummary'
 import { ReportTable } from '@/components/reports/ReportTable'
 import { ReportChart } from '@/components/reports/ReportChart'
+import { ExpenseSummaryCards } from '@/components/reports/ExpenseSummaryCards'
+import { ExpenseTrendChart } from '@/components/reports/ExpenseTrendChart'
 import { PDFExportOptions, PDFExportOptions as PDFOptions } from '@/components/reports/PDFExportOptions'
 import { toast } from '@/hooks/use-toast'
 import { generatePDFReport } from '@/utils/pdfGenerator'
@@ -126,10 +128,20 @@ export default function Relatorios() {
 
           {transactions.length > 0 && (
             <>
+              <ExpenseSummaryCards
+                despesasFixas={summaryData.despesasFixas}
+                despesasVariaveis={summaryData.despesasVariaveis}
+                despesasTotal={summaryData.despesas}
+              />
+
               <ReportChart
                 chartData={summaryData.chartData}
                 categoryData={summaryData.byCategory}
               />
+
+              {summaryData.trendData.length > 0 && (
+                <ExpenseTrendChart trendData={summaryData.trendData} />
+              )}
 
               <ReportTable transactions={transactions} />
             </>
