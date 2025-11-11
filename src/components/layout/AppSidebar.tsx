@@ -51,14 +51,14 @@ export function AppSidebar() {
               <img 
                 src="/lovable-uploads/a5a40de7-4096-4a32-af0c-76fe03ec72f7.png"
                 alt="FAL Icon" 
-                className="h-8 w-8"
+                className="h-12 w-12 rounded-xl"
               />
             </div>
           ) : (
             <img 
               src={getLogoSrc()} 
               alt="Finance Assistant Lustoza" 
-              className="h-10 w-auto"
+              className="h-16 w-auto rounded-xl"
             />
           )}
         </div>

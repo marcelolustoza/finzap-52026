@@ -61,7 +61,7 @@ export default function Plano() {
             <img 
               src={getLogoSrc()} 
               alt="Finance Assistant Lustoza" 
-              className="h-16 w-auto"
+              className="h-24 w-auto rounded-xl"
             />
           </div>
           
