@@ -11,17 +11,7 @@ export default function Plano() {
 
   // Determine which logo to use based on theme
   const getLogoSrc = () => {
-    if (theme === 'dark') {
-      return '/lovable-uploads/bd48b065-36ce-4af8-926d-a1f05a2d43c5.png' // logo-black
-    } else if (theme === 'light') {
-      return '/lovable-uploads/b679a5ba-8a42-42cc-bc36-ccf4569fa05f.png' // logo-white
-    } else {
-      // System theme - check actual computed theme
-      const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-      return isDark 
-        ? '/lovable-uploads/bd48b065-36ce-4af8-926d-a1f05a2d43c5.png'
-        : '/lovable-uploads/b679a5ba-8a42-42cc-bc36-ccf4569fa05f.png'
-    }
+    return '/lovable-uploads/fal-logo.png'
   }
 
   const handleSubscribe = () => {
@@ -70,8 +60,8 @@ export default function Plano() {
           <div>
             <img 
               src={getLogoSrc()} 
-              alt="FinanceFlow" 
-              className="h-8 w-auto"
+              alt="Finance Assistant Lustoza" 
+              className="h-16 w-auto"
             />
           </div>
           

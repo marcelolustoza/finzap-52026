@@ -19,15 +19,12 @@ export default function Auth() {
   // Determine which logo to use based on theme
   const getLogoSrc = () => {
     if (theme === 'dark') {
-      return '/lovable-uploads/bd48b065-36ce-4af8-926d-a1f05a2d43c5.png' // logo-black
+      return '/lovable-uploads/fal-logo.png' // White logo for dark theme
     } else if (theme === 'light') {
-      return '/lovable-uploads/b679a5ba-8a42-42cc-bc36-ccf4569fa05f.png' // logo-white
+      return '/lovable-uploads/fal-logo.png' // Black logo for light theme
     } else {
-      // System theme - check actual computed theme
-      const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-      return isDark 
-        ? '/lovable-uploads/bd48b065-36ce-4af8-926d-a1f05a2d43c5.png'
-        : '/lovable-uploads/b679a5ba-8a42-42cc-bc36-ccf4569fa05f.png'
+      // System theme
+      return '/lovable-uploads/fal-logo.png'
     }
   }
 
@@ -64,8 +61,8 @@ export default function Auth() {
           <div>
             <img 
               src={getLogoSrc()} 
-              alt="FinanceFlow" 
-              className="h-8 w-auto"
+              alt="Finance Assistant Lustoza" 
+              className="h-16 w-auto"
             />
           </div>
           
