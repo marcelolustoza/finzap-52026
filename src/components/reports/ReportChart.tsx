@@ -42,13 +42,13 @@ export function ReportChart({ chartData, categoryData }: ReportChartProps) {
   }))
 
   return (
-    <div className="grid gap-4 md:grid-cols-2">
+    <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2">
       <Card>
         <CardHeader>
           <CardTitle>Distribuição por Tipo</CardTitle>
         </CardHeader>
         <CardContent>
-          <ChartContainer config={chartConfig} className="h-[300px]">
+          <ChartContainer config={chartConfig} className="h-[400px]">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
@@ -77,7 +77,7 @@ export function ReportChart({ chartData, categoryData }: ReportChartProps) {
           <CardTitle>Receitas vs Despesas por Categoria</CardTitle>
         </CardHeader>
         <CardContent>
-          <ChartContainer config={chartConfig} className="h-[300px]">
+          <ChartContainer config={chartConfig} className="h-[400px]">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={categoryChartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
                 <XAxis 
