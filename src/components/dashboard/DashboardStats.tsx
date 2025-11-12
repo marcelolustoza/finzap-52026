@@ -7,6 +7,8 @@ interface DashboardStatsProps {
   stats: {
     totalReceitas: number
     totalDespesas: number
+    despesasFixas: number
+    despesasVariaveis: number
     saldo: number
     transacoesCount: number
     lembretesCount: number
@@ -15,7 +17,7 @@ interface DashboardStatsProps {
 
 export function DashboardStats({ stats }: DashboardStatsProps) {
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
       <Card className="border-l-4 border-l-green-500">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">
@@ -50,6 +52,40 @@ export function DashboardStats({ stats }: DashboardStatsProps) {
         </CardContent>
       </Card>
 
+      <Card className="border-l-4 border-l-orange-500">
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardTitle className="text-sm font-medium">
+            Despesas Fixas
+          </CardTitle>
+          <TrendingDown className="h-4 w-4 text-orange-600" />
+        </CardHeader>
+        <CardContent>
+          <div className="text-2xl font-bold text-orange-600">
+            {formatCurrency(stats.despesasFixas)}
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Mês atual
+          </p>
+        </CardContent>
+      </Card>
+
+      <Card className="border-l-4 border-l-purple-500">
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardTitle className="text-sm font-medium">
+            Despesas Variáveis
+          </CardTitle>
+          <TrendingDown className="h-4 w-4 text-purple-600" />
+        </CardHeader>
+        <CardContent>
+          <div className="text-2xl font-bold text-purple-600">
+            {formatCurrency(stats.despesasVariaveis)}
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Mês atual
+          </p>
+        </CardContent>
+      </Card>
+
       <Card className="border-l-4 border-l-primary">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">
@@ -63,23 +99,6 @@ export function DashboardStats({ stats }: DashboardStatsProps) {
           </div>
           <p className="text-xs text-muted-foreground">
             Receitas - Despesas
-          </p>
-        </CardContent>
-      </Card>
-
-      <Card className="border-l-4 border-l-purple-500">
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">
-            Lembretes Ativos
-          </CardTitle>
-          <Calendar className="h-4 w-4 text-purple-600" />
-        </CardHeader>
-        <CardContent>
-          <div className="text-2xl font-bold text-purple-600">
-            {stats.lembretesCount}
-          </div>
-          <p className="text-xs text-muted-foreground">
-            Este mês
           </p>
         </CardContent>
       </Card>

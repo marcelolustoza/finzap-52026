@@ -28,6 +28,7 @@ interface Transacao {
   valor: number | null
   detalhes: string | null
   tipo: string | null
+  tipo_despesa: string | null
   category_id: string
   userid: string | null
   categorias?: {
@@ -48,6 +49,7 @@ export default function Transacoes() {
   const [searchTerm, setSearchTerm] = useState('')
   const [typeFilter, setTypeFilter] = useState('')
   const [categoryFilter, setCategoryFilter] = useState('')
+  const [expenseTypeFilter, setExpenseTypeFilter] = useState('')
 
   const [formData, setFormData] = useState({
     quando: '',
@@ -55,6 +57,7 @@ export default function Transacoes() {
     valor: 0,
     detalhes: '',
     tipo: '',
+    tipo_despesa: '',
     category_id: '',
   })
 
@@ -71,10 +74,11 @@ export default function Transacoes() {
         (transacao.estabelecimento?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false)
       const matchesType = !typeFilter || transacao.tipo === typeFilter
       const matchesCategory = !categoryFilter || transacao.category_id === categoryFilter
+      const matchesExpenseType = !expenseTypeFilter || transacao.tipo_despesa === expenseTypeFilter
       
-      return matchesSearch && matchesType && matchesCategory
+      return matchesSearch && matchesType && matchesCategory && matchesExpenseType
     })
-  }, [transacoes, searchTerm, typeFilter, categoryFilter])
+  }, [transacoes, searchTerm, typeFilter, categoryFilter, expenseTypeFilter])
 
   // Cálculo dos totais
   const { receitas, despesas, saldo } = useMemo(() => {
@@ -124,6 +128,7 @@ export default function Transacoes() {
     setSearchTerm('')
     setTypeFilter('')
     setCategoryFilter('')
+    setExpenseTypeFilter('')
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -178,6 +183,7 @@ export default function Transacoes() {
         valor: 0,
         detalhes: '',
         tipo: '',
+        tipo_despesa: '',
         category_id: '',
       })
       fetchTransacoes()
@@ -198,6 +204,7 @@ export default function Transacoes() {
       valor: transacao.valor || 0,
       detalhes: transacao.detalhes || '',
       tipo: transacao.tipo || '',
+      tipo_despesa: transacao.tipo_despesa || '',
       category_id: transacao.category_id || '',
     })
     setDialogOpen(true)
@@ -320,6 +327,20 @@ export default function Transacoes() {
                     />
                   </div>
                 </div>
+                {formData.tipo === 'despesa' && (
+                  <div className="space-y-2">
+                    <Label htmlFor="tipo_despesa">Tipo de Despesa</Label>
+                    <Select value={formData.tipo_despesa} onValueChange={(value) => setFormData({...formData, tipo_despesa: value})}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Selecione o tipo de despesa" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="fixa">Fixa</SelectItem>
+                        <SelectItem value="variavel">Variável</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
                 <div className="space-y-2">
                   <Label htmlFor="estabelecimento">Estabelecimento</Label>
                   <Input
@@ -377,6 +398,8 @@ export default function Transacoes() {
         onTypeFilterChange={setTypeFilter}
         categoryFilter={categoryFilter}
         onCategoryFilterChange={setCategoryFilter}
+        expenseTypeFilter={expenseTypeFilter}
+        onExpenseTypeFilterChange={setExpenseTypeFilter}
         onClearFilters={clearFilters}
       />
 

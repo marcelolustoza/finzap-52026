@@ -16,6 +16,7 @@ interface Transacao {
   valor: number | null
   detalhes: string | null
   tipo: string | null
+  tipo_despesa: string | null
   category_id: string
   userid: string | null
   categorias?: {
@@ -114,6 +115,14 @@ export default function Dashboard() {
       .filter(t => t.tipo === 'despesa')
       .reduce((acc, t) => acc + (t.valor || 0), 0)
     
+    const despesasFixas = filteredTransacoes
+      .filter(t => t.tipo === 'despesa' && t.tipo_despesa === 'fixa')
+      .reduce((acc, t) => acc + (t.valor || 0), 0)
+    
+    const despesasVariaveis = filteredTransacoes
+      .filter(t => t.tipo === 'despesa' && t.tipo_despesa === 'variavel')
+      .reduce((acc, t) => acc + (t.valor || 0), 0)
+    
     const saldo = totalReceitas - totalDespesas
     
     const lembretesCount = lembretes.filter(l => {
@@ -126,6 +135,8 @@ export default function Dashboard() {
     return {
       totalReceitas,
       totalDespesas,
+      despesasFixas,
+      despesasVariaveis,
       saldo,
       transacoesCount: filteredTransacoes.length,
       lembretesCount

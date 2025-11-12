@@ -9,6 +9,7 @@ export interface Category {
   id: string;
   nome: string;
   tags: string | null;
+  tipo_despesa: string | null;
   created_at: string;
   updated_at: string;
   userid: string;
@@ -40,7 +41,7 @@ export function useCategories() {
   });
 
   const createCategory = useMutation({
-    mutationFn: async (newCategory: { nome: string; tags?: string }) => {
+    mutationFn: async (newCategory: { nome: string; tags?: string; tipo_despesa?: string | null }) => {
       if (!user?.id) throw new Error('Usuário não autenticado');
 
       const { data, error } = await supabase
@@ -49,6 +50,7 @@ export function useCategories() {
           {
             nome: newCategory.nome,
             tags: newCategory.tags || null,
+            tipo_despesa: newCategory.tipo_despesa || null,
             userid: user.id,
           },
         ])
@@ -69,12 +71,13 @@ export function useCategories() {
   });
 
   const updateCategory = useMutation({
-    mutationFn: async ({ id, updates }: { id: string; updates: { nome: string; tags?: string } }) => {
+    mutationFn: async ({ id, updates }: { id: string; updates: { nome: string; tags?: string; tipo_despesa?: string | null } }) => {
       const { data, error } = await supabase
         .from('categorias')
         .update({
           nome: updates.nome,
           tags: updates.tags || null,
+          tipo_despesa: updates.tipo_despesa || null,
           updated_at: new Date().toISOString(),
         })
         .eq('id', id)

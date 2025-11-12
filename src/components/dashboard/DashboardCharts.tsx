@@ -11,6 +11,7 @@ interface Transacao {
   valor: number | null
   detalhes: string | null
   tipo: string | null
+  tipo_despesa: string | null
   category_id: string
   userid: string | null
   categorias?: {
@@ -43,11 +44,13 @@ export function DashboardCharts({ transacoes }: DashboardChartsProps) {
 
   const getPieData = () => {
     const receitas = transacoes.filter(t => t.tipo === 'receita').reduce((sum, t) => sum + (t.valor || 0), 0)
-    const despesas = transacoes.filter(t => t.tipo === 'despesa').reduce((sum, t) => sum + (t.valor || 0), 0)
+    const despesasFixas = transacoes.filter(t => t.tipo === 'despesa' && t.tipo_despesa === 'fixa').reduce((sum, t) => sum + (t.valor || 0), 0)
+    const despesasVariaveis = transacoes.filter(t => t.tipo === 'despesa' && t.tipo_despesa === 'variavel').reduce((sum, t) => sum + (t.valor || 0), 0)
 
     return [
       { name: 'Receitas', value: receitas },
-      { name: 'Despesas', value: Math.abs(despesas) }
+      { name: 'Despesas Fixas', value: Math.abs(despesasFixas) },
+      { name: 'Despesas Variáveis', value: Math.abs(despesasVariaveis) }
     ]
   }
 
@@ -91,7 +94,7 @@ export function DashboardCharts({ transacoes }: DashboardChartsProps) {
         <CardHeader>
           <CardTitle>Receitas vs Despesas</CardTitle>
           <CardDescription>
-            Proporção entre receitas e despesas do período
+            Distribuição entre receitas, despesas fixas e variáveis
           </CardDescription>
         </CardHeader>
         <CardContent>

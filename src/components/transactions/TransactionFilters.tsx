@@ -12,6 +12,8 @@ interface TransactionFiltersProps {
   onTypeFilterChange: (value: string) => void
   categoryFilter: string
   onCategoryFilterChange: (value: string) => void
+  expenseTypeFilter?: string
+  onExpenseTypeFilterChange?: (value: string) => void
   onClearFilters: () => void
 }
 
@@ -22,10 +24,12 @@ export function TransactionFilters({
   onTypeFilterChange,
   categoryFilter,
   onCategoryFilterChange,
+  expenseTypeFilter,
+  onExpenseTypeFilterChange,
   onClearFilters
 }: TransactionFiltersProps) {
   const { categories, isLoading } = useCategories()
-  const hasFilters = searchTerm || typeFilter || categoryFilter
+  const hasFilters = searchTerm || typeFilter || categoryFilter || expenseTypeFilter
 
   const handleTypeChange = (value: string) => {
     onTypeFilterChange(value === 'all' ? '' : value)
@@ -33,6 +37,10 @@ export function TransactionFilters({
 
   const handleCategoryChange = (value: string) => {
     onCategoryFilterChange(value === 'all' ? '' : value)
+  }
+
+  const handleExpenseTypeChange = (value: string) => {
+    onExpenseTypeFilterChange?.(value === 'all' ? '' : value)
   }
 
   return (
@@ -58,6 +66,19 @@ export function TransactionFilters({
           <SelectItem value="despesa">Despesas</SelectItem>
         </SelectContent>
       </Select>
+
+      {typeFilter === 'despesa' && onExpenseTypeFilterChange && (
+        <Select value={expenseTypeFilter || 'all'} onValueChange={handleExpenseTypeChange}>
+          <SelectTrigger className="w-full sm:w-[180px]">
+            <SelectValue placeholder="Tipo de Despesa" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">Todas despesas</SelectItem>
+            <SelectItem value="fixa">Fixas</SelectItem>
+            <SelectItem value="variavel">Variáveis</SelectItem>
+          </SelectContent>
+        </Select>
+      )}
 
       <Select value={categoryFilter || 'all'} onValueChange={handleCategoryChange} disabled={isLoading}>
         <SelectTrigger className="w-full sm:w-[180px]">

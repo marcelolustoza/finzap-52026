@@ -6,6 +6,13 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
   Dialog,
   DialogContent,
   DialogHeader,
@@ -21,15 +28,18 @@ interface CategoryFormProps {
 export function CategoryForm({ category, onClose }: CategoryFormProps) {
   const [nome, setNome] = useState('');
   const [tags, setTags] = useState('');
+  const [tipoDespesa, setTipoDespesa] = useState('');
   const { createCategory, updateCategory, isCreating, isUpdating } = useCategories();
 
   useEffect(() => {
     if (category) {
       setNome(category.nome);
       setTags(category.tags || '');
+      setTipoDespesa(category.tipo_despesa || '');
     } else {
       setNome('');
       setTags('');
+      setTipoDespesa('');
     }
   }, [category]);
 
@@ -42,12 +52,17 @@ export function CategoryForm({ category, onClose }: CategoryFormProps) {
       if (category) {
         updateCategory({
           id: category.id,
-          updates: { nome: nome.trim(), tags: tags.trim() },
+          updates: { 
+            nome: nome.trim(), 
+            tags: tags.trim(),
+            tipo_despesa: tipoDespesa || null
+          },
         });
       } else {
         createCategory({
           nome: nome.trim(),
           tags: tags.trim(),
+          tipo_despesa: tipoDespesa || null
         });
       }
       onClose();
@@ -75,6 +90,22 @@ export function CategoryForm({ category, onClose }: CategoryFormProps) {
               placeholder="Ex: Alimentação"
               required
             />
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="tipo_despesa">Tipo de Despesa Padrão (opcional)</Label>
+            <Select value={tipoDespesa} onValueChange={setTipoDespesa}>
+              <SelectTrigger>
+                <SelectValue placeholder="Selecione o tipo" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="fixa">Fixa</SelectItem>
+                <SelectItem value="variavel">Variável</SelectItem>
+              </SelectContent>
+            </Select>
+            <p className="text-xs text-muted-foreground">
+              Define o tipo padrão para transações desta categoria
+            </p>
           </div>
           
           <div className="space-y-2">
