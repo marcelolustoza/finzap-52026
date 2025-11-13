@@ -1,7 +1,8 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { formatCurrency } from '@/utils/currency'
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts'
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart'
 
 interface Transacao {
   id: number
@@ -24,21 +25,41 @@ interface DashboardChartsProps {
   transacoes: Transacao[]
 }
 
-const COLORS = ['#4361ee', '#7209b7', '#f72585', '#4cc9f0', '#4895ef', '#4361ee']
+const COLORS = ['#22c55e', '#7209b7', '#f72585']
+
+const chartConfig = {
+  despesasFixas: {
+    label: "Despesas Fixas",
+    color: "#7209b7",
+  },
+  despesasVariaveis: {
+    label: "Despesas Variáveis",
+    color: "#f72585",
+  },
+}
 
 export function DashboardCharts({ transacoes }: DashboardChartsProps) {
   const getChartData = () => {
-    const categorias: { [key: string]: number } = {}
+    const categorias: { [key: string]: { despesasFixas: number; despesasVariaveis: number } } = {}
     
     transacoes.forEach(t => {
       if (t.categorias?.nome && t.valor && t.tipo === 'despesa') {
-        categorias[t.categorias.nome] = (categorias[t.categorias.nome] || 0) + Math.abs(t.valor)
+        if (!categorias[t.categorias.nome]) {
+          categorias[t.categorias.nome] = { despesasFixas: 0, despesasVariaveis: 0 }
+        }
+        
+        if (t.tipo_despesa === 'fixa') {
+          categorias[t.categorias.nome].despesasFixas += Math.abs(t.valor)
+        } else if (t.tipo_despesa === 'variavel') {
+          categorias[t.categorias.nome].despesasVariaveis += Math.abs(t.valor)
+        }
       }
     })
 
-    return Object.entries(categorias).map(([categoria, valor]) => ({
+    return Object.entries(categorias).map(([categoria, valores]) => ({
       categoria,
-      valor
+      despesasFixas: valores.despesasFixas,
+      despesasVariaveis: valores.despesasVariaveis
     }))
   }
 
@@ -48,9 +69,9 @@ export function DashboardCharts({ transacoes }: DashboardChartsProps) {
     const despesasVariaveis = transacoes.filter(t => t.tipo === 'despesa' && t.tipo_despesa === 'variavel').reduce((sum, t) => sum + (t.valor || 0), 0)
 
     return [
-      { name: 'Receitas', value: receitas },
-      { name: 'Despesas Fixas', value: Math.abs(despesasFixas) },
-      { name: 'Despesas Variáveis', value: Math.abs(despesasVariaveis) }
+      { name: 'Receitas', value: receitas, fill: '#22c55e' },
+      { name: 'Despesas Fixas', value: Math.abs(despesasFixas), fill: '#7209b7' },
+      { name: 'Despesas Variáveis', value: Math.abs(despesasVariaveis), fill: '#f72585' }
     ]
   }
 
@@ -67,26 +88,34 @@ export function DashboardCharts({ transacoes }: DashboardChartsProps) {
   }
 
   return (
-    <div className="grid gap-6 md:grid-cols-2">
-      <Card className="md:col-span-2 lg:col-span-1">
+    <div className="space-y-6">
+      <Card>
         <CardHeader>
-          <CardTitle>Gastos por Categoria</CardTitle>
+          <CardTitle>Gastos por Categoria (Fixas e Variáveis)</CardTitle>
           <CardDescription>
             Distribuição dos seus gastos no período selecionado
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="h-[300px]">
+          <ChartContainer config={chartConfig} className="h-[450px]">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={getChartData()}>
+              <BarChart data={getChartData()} margin={{ top: 20, right: 30, left: 20, bottom: 80 }}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="categoria" />
-                <YAxis />
-                <Tooltip formatter={(value) => formatCurrency(Number(value))} />
-                <Bar dataKey="valor" fill="#4361ee" />
+                <XAxis 
+                  dataKey="categoria" 
+                  tick={{ fontSize: 11 }}
+                  angle={-45}
+                  textAnchor="end"
+                  height={100}
+                />
+                <YAxis tick={{ fontSize: 12 }} />
+                <ChartTooltip content={<ChartTooltipContent />} />
+                <Legend />
+                <Bar dataKey="despesasFixas" fill="#7209b7" name="Despesas Fixas" />
+                <Bar dataKey="despesasVariaveis" fill="#f72585" name="Despesas Variáveis" />
               </BarChart>
             </ResponsiveContainer>
-          </div>
+          </ChartContainer>
         </CardContent>
       </Card>
 
@@ -98,30 +127,30 @@ export function DashboardCharts({ transacoes }: DashboardChartsProps) {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="h-[200px]">
+          <ChartContainer config={chartConfig} className="h-[400px]">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
                   data={getPieData()}
                   cx="50%"
                   cy="50%"
-                  outerRadius={80}
-                  fill="#8884d8"
+                  labelLine={false}
+                  label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                  outerRadius={100}
                   dataKey="value"
-                  label={({ name, value }) => `${name}: ${formatCurrency(value)}`}
                 >
                   {getPieData().map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    <Cell key={`cell-${index}`} fill={entry.fill} />
                   ))}
                 </Pie>
-                <Tooltip formatter={(value) => formatCurrency(Number(value))} />
+                <ChartTooltip content={<ChartTooltipContent />} />
               </PieChart>
             </ResponsiveContainer>
-          </div>
+          </ChartContainer>
         </CardContent>
       </Card>
 
-      <Card className="md:col-span-2">
+      <Card>
         <CardHeader>
           <CardTitle>Resumo do Período</CardTitle>
           <CardDescription>

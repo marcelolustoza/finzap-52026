@@ -17,6 +17,8 @@ interface PDFReportData {
   summaryData: {
     receitas: number
     despesas: number
+    despesasFixas: number
+    despesasVariaveis: number
     saldo: number
     totalTransactions: number
     byCategory: Record<string, { receitas: number; despesas: number; total: number }>
@@ -136,7 +138,15 @@ export const generatePDFReport = (data: PDFReportData, options: PDFExportOptions
       .filter(t => t.tipo === 'despesa')
       .reduce((acc, t) => acc + (t.valor || 0), 0)
     
-    return { receitas, despesas, saldo: receitas - despesas }
+    const despesasFixas = filteredTransactions
+      .filter(t => t.tipo === 'despesa' && t.tipo_despesa === 'fixa')
+      .reduce((acc, t) => acc + (t.valor || 0), 0)
+    
+    const despesasVariaveis = filteredTransactions
+      .filter(t => t.tipo === 'despesa' && t.tipo_despesa === 'variavel')
+      .reduce((acc, t) => acc + (t.valor || 0), 0)
+    
+    return { receitas, despesas, despesasFixas, despesasVariaveis, saldo: receitas - despesas }
   }
 
   const filteredSummary = getFilteredSummary()
@@ -162,6 +172,8 @@ export const generatePDFReport = (data: PDFReportData, options: PDFExportOptions
     
     if (options.transactionType === 'all' || options.transactionType === 'despesa') {
       summaryData.push(['Total de Despesas', formatCurrency(filteredSummary.despesas)])
+      summaryData.push(['Despesas Fixas', formatCurrency(filteredSummary.despesasFixas)])
+      summaryData.push(['Despesas Variáveis', formatCurrency(filteredSummary.despesasVariaveis)])
     }
     
     if (options.transactionType === 'all') {
@@ -296,11 +308,13 @@ export const generatePDFReport = (data: PDFReportData, options: PDFExportOptions
       transaction.estabelecimento || 'Sem estabelecimento',
       transaction.categorias?.nome || 'Sem categoria',
       transaction.tipo || '-',
+      transaction.tipo === 'despesa' && transaction.tipo_despesa ? 
+        (transaction.tipo_despesa === 'fixa' ? 'Fixa' : 'Variável') : '-',
       `${transaction.tipo === 'receita' ? '+' : '-'}${formatCurrency(Math.abs(transaction.valor || 0))}`
     ])
 
     doc.autoTable({
-      head: [['Data', 'Estabelecimento', 'Categoria', 'Tipo', 'Valor']],
+      head: [['Data', 'Estabelecimento', 'Categoria', 'Tipo', 'Despesa', 'Valor']],
       body: tableData,
       startY: yPosition,
       styles: {
@@ -313,7 +327,7 @@ export const generatePDFReport = (data: PDFReportData, options: PDFExportOptions
         fontStyle: 'bold',
       },
       columnStyles: {
-        4: { halign: 'right' }
+        5: { halign: 'right' }
       },
       margin: { left: margin, right: margin },
       didDrawPage: () => {

@@ -35,7 +35,11 @@ export default function Relatorios() {
     try {
       const reportData = {
         transactions,
-        summaryData,
+        summaryData: {
+          ...summaryData,
+          despesasFixas: summaryData.despesasFixas,
+          despesasVariaveis: summaryData.despesasVariaveis
+        },
         filters,
         userName: user?.user_metadata?.nome || user?.email || 'Usuário'
       }

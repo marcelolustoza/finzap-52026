@@ -15,25 +15,25 @@ export function ExpenseSummaryCards({
 }: ExpenseSummaryCardsProps) {
   return (
     <div className="grid gap-4 md:grid-cols-3">
-      <Card className="border-l-4 border-l-orange-500">
+      <Card className="border-l-4" style={{ borderLeftColor: '#7209b7' }}>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Despesas Fixas</CardTitle>
-          <Repeat className="h-4 w-4 text-orange-600" />
+          <Repeat className="h-4 w-4" style={{ color: '#7209b7' }} />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold text-orange-600">
+          <div className="text-2xl font-bold" style={{ color: '#7209b7' }}>
             {formatCurrency(despesasFixas)}
           </div>
         </CardContent>
       </Card>
 
-      <Card className="border-l-4 border-l-purple-500">
+      <Card className="border-l-4" style={{ borderLeftColor: '#f72585' }}>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Despesas Variáveis</CardTitle>
-          <CreditCard className="h-4 w-4 text-purple-600" />
+          <CreditCard className="h-4 w-4" style={{ color: '#f72585' }} />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold text-purple-600">
+          <div className="text-2xl font-bold" style={{ color: '#f72585' }}>
             {formatCurrency(despesasVariaveis)}
           </div>
         </CardContent>
