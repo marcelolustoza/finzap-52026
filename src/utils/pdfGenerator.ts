@@ -243,6 +243,22 @@ export const generatePDFReport = (data: PDFReportData, options: PDFExportOptions
         headers.push('Saldo')
       }
 
+      const columnStyles: any = {
+        0: { halign: 'left' }
+      }
+      let colIndex = 1
+      if (options.transactionType === 'all' || options.transactionType === 'receita') {
+        columnStyles[colIndex] = { halign: 'right' }
+        colIndex++
+      }
+      if (options.transactionType === 'all' || options.transactionType === 'despesa') {
+        columnStyles[colIndex] = { halign: 'right' }
+        colIndex++
+      }
+      if (options.transactionType === 'all') {
+        columnStyles[colIndex] = { halign: 'right' }
+      }
+
       doc.autoTable({
         head: [headers],
         body: categoryData,
@@ -251,13 +267,10 @@ export const generatePDFReport = (data: PDFReportData, options: PDFExportOptions
         headStyles: { 
           fillColor: primaryColor,
           textColor: 255,
-          fontStyle: 'bold'
+          fontStyle: 'bold',
+          halign: 'left'
         },
-        columnStyles: {
-          1: { halign: 'right' },
-          2: { halign: 'right' },
-          3: { halign: 'right' }
-        },
+        columnStyles,
         margin: { left: margin, right: margin }
       })
 
