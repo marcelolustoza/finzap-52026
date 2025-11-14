@@ -97,10 +97,10 @@ export function DashboardCharts({ transacoes }: DashboardChartsProps) {
               Distribuição dos seus gastos no período selecionado
             </CardDescription>
           </CardHeader>
-          <CardContent className="pl-2">
+          <CardContent className="pl-0">
             <ChartContainer config={chartConfig} className="h-[450px]">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={getChartData()} margin={{ top: 20, right: 20, left: -10, bottom: 80 }}>
+                <BarChart data={getChartData()} margin={{ top: 20, right: 20, left: -20, bottom: 80 }}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis 
                     dataKey="categoria" 
@@ -127,13 +127,13 @@ export function DashboardCharts({ transacoes }: DashboardChartsProps) {
               Distribuição entre receitas, despesas fixas e variáveis
             </CardDescription>
           </CardHeader>
-          <CardContent className="pl-2">
+          <CardContent className="pl-0">
             <ChartContainer config={chartConfig} className="h-[450px]">
               <ResponsiveContainer width="100%" height="100%">
-                <PieChart margin={{ top: 10, right: 40, left: -40, bottom: 10 }}>
+                <PieChart margin={{ top: 10, right: 50, left: -50, bottom: 10 }}>
                   <Pie
                     data={getPieData()}
-                    cx="35%"
+                    cx="30%"
                     cy="50%"
                     labelLine={false}
                     label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
