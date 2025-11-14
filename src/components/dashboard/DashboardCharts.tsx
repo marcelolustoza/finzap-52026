@@ -97,26 +97,26 @@ export function DashboardCharts({ transacoes }: DashboardChartsProps) {
               Distribuição dos seus gastos no período selecionado
             </CardDescription>
           </CardHeader>
-          <CardContent>
-          <ChartContainer config={chartConfig} className="h-[450px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={getChartData()} margin={{ top: 20, right: 20, left: 20, bottom: 80 }}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis 
-                  dataKey="categoria" 
-                  tick={{ fontSize: 11 }}
-                  angle={-45}
-                  textAnchor="end"
-                  height={100}
-                />
-                <YAxis tick={{ fontSize: 12 }} />
-                <ChartTooltip content={<ChartTooltipContent />} />
-                <Legend />
-                <Bar dataKey="despesasFixas" fill="#7209b7" name="Despesas Fixas" />
-                <Bar dataKey="despesasVariaveis" fill="#f72585" name="Despesas Variáveis" />
-              </BarChart>
-            </ResponsiveContainer>
-          </ChartContainer>
+          <CardContent className="pl-2">
+            <ChartContainer config={chartConfig} className="h-[450px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={getChartData()} margin={{ top: 20, right: 20, left: -10, bottom: 80 }}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis 
+                    dataKey="categoria" 
+                    tick={{ fontSize: 11 }}
+                    angle={-45}
+                    textAnchor="end"
+                    height={100}
+                  />
+                  <YAxis tick={{ fontSize: 12 }} />
+                  <ChartTooltip content={<ChartTooltipContent />} />
+                  <Legend />
+                  <Bar dataKey="despesasFixas" fill="#7209b7" name="Despesas Fixas" />
+                  <Bar dataKey="despesasVariaveis" fill="#f72585" name="Despesas Variáveis" />
+                </BarChart>
+              </ResponsiveContainer>
+            </ChartContainer>
           </CardContent>
         </Card>
 
@@ -127,27 +127,27 @@ export function DashboardCharts({ transacoes }: DashboardChartsProps) {
               Distribuição entre receitas, despesas fixas e variáveis
             </CardDescription>
           </CardHeader>
-          <CardContent>
-          <ChartContainer config={chartConfig} className="h-[450px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart margin={{ top: 10, right: 10, left: 10, bottom: 10 }}>
-                <Pie
-                  data={getPieData()}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                  outerRadius={90}
-                  dataKey="value"
-                >
-                  {getPieData().map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.fill} />
-                  ))}
-                </Pie>
-                <ChartTooltip content={<ChartTooltipContent />} />
-              </PieChart>
-            </ResponsiveContainer>
-          </ChartContainer>
+          <CardContent className="pl-2">
+            <ChartContainer config={chartConfig} className="h-[450px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart margin={{ top: 10, right: 10, left: -10, bottom: 10 }}>
+                  <Pie
+                    data={getPieData()}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                    outerRadius={90}
+                    dataKey="value"
+                  >
+                    {getPieData().map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.fill} />
+                    ))}
+                  </Pie>
+                  <ChartTooltip content={<ChartTooltipContent />} />
+                </PieChart>
+              </ResponsiveContainer>
+            </ChartContainer>
           </CardContent>
         </Card>
       </div>
