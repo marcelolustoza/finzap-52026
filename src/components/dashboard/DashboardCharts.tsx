@@ -130,10 +130,10 @@ export function DashboardCharts({ transacoes }: DashboardChartsProps) {
           <CardContent className="pl-2">
             <ChartContainer config={chartConfig} className="h-[450px]">
               <ResponsiveContainer width="100%" height="100%">
-                <PieChart margin={{ top: 10, right: 30, left: -30, bottom: 10 }}>
+                <PieChart margin={{ top: 10, right: 40, left: -40, bottom: 10 }}>
                   <Pie
                     data={getPieData()}
-                    cx="40%"
+                    cx="35%"
                     cy="50%"
                     labelLine={false}
                     label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
