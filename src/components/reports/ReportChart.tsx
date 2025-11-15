@@ -42,13 +42,13 @@ export function ReportChart({ chartData, categoryData }: ReportChartProps) {
   }))
 
   return (
-    <div className="space-y-6">
-      <Card>
+    <div className="space-y-6 w-full max-w-full overflow-x-hidden">
+      <Card className="w-full max-w-full overflow-hidden">
         <CardHeader>
-          <CardTitle>Distribuição por Tipo</CardTitle>
+          <CardTitle className="text-base md:text-lg">Distribuição por Tipo</CardTitle>
         </CardHeader>
-        <CardContent className="flex items-center justify-center">
-          <ChartContainer config={chartConfig} className="h-[500px] w-full">
+        <CardContent className="flex items-center justify-center w-full max-w-full">
+          <ChartContainer config={chartConfig} className="h-[350px] md:h-[500px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
@@ -57,7 +57,7 @@ export function ReportChart({ chartData, categoryData }: ReportChartProps) {
                   cy="50%"
                   labelLine={true}
                   label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                  outerRadius={140}
+                  outerRadius={100}
                   fill="#8884d8"
                   dataKey="value"
                 >
@@ -72,22 +72,22 @@ export function ReportChart({ chartData, categoryData }: ReportChartProps) {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="w-full max-w-full overflow-hidden">
         <CardHeader>
-          <CardTitle>Receitas vs Despesas por Categoria</CardTitle>
+          <CardTitle className="text-base md:text-lg">Receitas vs Despesas por Categoria</CardTitle>
         </CardHeader>
-        <CardContent>
-          <ChartContainer config={chartConfig} className="h-[500px]">
+        <CardContent className="w-full max-w-full overflow-x-auto">
+          <ChartContainer config={chartConfig} className="h-[400px] md:h-[500px] w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={categoryChartData} margin={{ top: 20, right: 30, left: 20, bottom: 100 }}>
+              <BarChart data={categoryChartData} margin={{ top: 20, right: 10, left: 0, bottom: 100 }}>
                 <XAxis 
                   dataKey="category" 
-                  tick={{ fontSize: 11 }}
+                  tick={{ fontSize: 10 }}
                   angle={-45}
                   textAnchor="end"
                   height={120}
                 />
-                <YAxis tick={{ fontSize: 12 }} />
+                <YAxis tick={{ fontSize: 10 }} />
                 <ChartTooltip content={<ChartTooltipContent />} />
                 <Bar dataKey="receitas" fill="#22c55e" name="Receitas" />
                 <Bar dataKey="despesas" fill="#ef4444" name="Despesas" />
