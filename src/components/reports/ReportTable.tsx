@@ -17,58 +17,62 @@ export function ReportTable({ transactions }: ReportTableProps) {
   }
 
   return (
-    <Card>
+    <Card className="w-full max-w-full overflow-hidden">
       <CardHeader>
-        <CardTitle>Detalhes das Transações</CardTitle>
+        <CardTitle className="text-base md:text-lg">Detalhes das Transações</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="w-full max-w-full overflow-x-auto p-0 md:p-6">
         {transactions.length === 0 ? (
-          <div className="text-center py-8 text-muted-foreground">
+          <div className="text-center py-8 text-muted-foreground px-4">
             Nenhuma transação encontrada com os filtros aplicados.
           </div>
         ) : (
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Data</TableHead>
-                <TableHead>Estabelecimento</TableHead>
-                <TableHead>Categoria</TableHead>
-                <TableHead>Tipo</TableHead>
-                <TableHead className="text-right">Valor</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {transactions.map((transaction) => (
-                <TableRow key={transaction.id}>
-                  <TableCell>{formatDate(transaction.quando || '')}</TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-2">
-                      {transaction.tipo === 'receita' ? (
-                        <TrendingUp className="h-4 w-4 text-green-600" />
-                      ) : (
-                        <TrendingDown className="h-4 w-4 text-red-600" />
-                      )}
-                      {transaction.estabelecimento || 'Sem estabelecimento'}
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    {transaction.categorias?.nome || 'Sem categoria'}
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant={transaction.tipo === 'receita' ? 'default' : 'destructive'}>
-                      {transaction.tipo}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className={`text-right font-medium ${
-                    transaction.tipo === 'receita' ? 'text-green-600' : 'text-red-600'
-                  }`}>
-                    {transaction.tipo === 'receita' ? '+' : '-'}
-                    {formatCurrency(Math.abs(transaction.valor || 0))}
-                  </TableCell>
+          <div className="w-full overflow-x-auto">
+            <Table className="min-w-[600px]">
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="text-xs md:text-sm">Data</TableHead>
+                  <TableHead className="text-xs md:text-sm">Estabelecimento</TableHead>
+                  <TableHead className="text-xs md:text-sm hidden md:table-cell">Categoria</TableHead>
+                  <TableHead className="text-xs md:text-sm">Tipo</TableHead>
+                  <TableHead className="text-right text-xs md:text-sm">Valor</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {transactions.map((transaction) => (
+                  <TableRow key={transaction.id}>
+                    <TableCell className="text-xs md:text-sm whitespace-nowrap">{formatDate(transaction.quando || '')}</TableCell>
+                    <TableCell className="text-xs md:text-sm">
+                      <div className="flex items-center gap-1 md:gap-2">
+                        {transaction.tipo === 'receita' ? (
+                          <TrendingUp className="h-3 w-3 md:h-4 md:w-4 text-green-600 flex-shrink-0" />
+                        ) : (
+                          <TrendingDown className="h-3 w-3 md:h-4 md:w-4 text-red-600 flex-shrink-0" />
+                        )}
+                        <span className="truncate max-w-[120px] md:max-w-none">
+                          {transaction.estabelecimento || 'Sem estabelecimento'}
+                        </span>
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-xs md:text-sm hidden md:table-cell">
+                      {transaction.categorias?.nome || 'Sem categoria'}
+                    </TableCell>
+                    <TableCell className="text-xs md:text-sm">
+                      <Badge variant={transaction.tipo === 'receita' ? 'default' : 'destructive'} className="text-xs">
+                        {transaction.tipo}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className={`text-right font-medium text-xs md:text-sm whitespace-nowrap ${
+                      transaction.tipo === 'receita' ? 'text-green-600' : 'text-red-600'
+                    }`}>
+                      {transaction.tipo === 'receita' ? '+' : '-'}
+                      {formatCurrency(Math.abs(transaction.valor || 0))}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         )}
       </CardContent>
     </Card>

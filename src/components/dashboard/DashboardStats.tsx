@@ -17,16 +17,16 @@ interface DashboardStatsProps {
 
 export function DashboardStats({ stats }: DashboardStatsProps) {
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
-      <Card className="border-l-4 border-l-green-500">
+    <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 w-full max-w-full">
+      <Card className="border-l-4 border-l-green-500 w-full max-w-full">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">
+          <CardTitle className="text-xs md:text-sm font-medium">
             Total de Receitas
           </CardTitle>
           <TrendingUp className="h-4 w-4 text-green-600" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold text-green-600">
+          <div className="text-xl md:text-2xl font-bold text-green-600">
             {formatCurrency(stats.totalReceitas)}
           </div>
           <p className="text-xs text-muted-foreground">
@@ -35,15 +35,15 @@ export function DashboardStats({ stats }: DashboardStatsProps) {
         </CardContent>
       </Card>
 
-      <Card className="border-l-4 border-l-red-500">
+      <Card className="border-l-4 border-l-red-500 w-full max-w-full">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">
+          <CardTitle className="text-xs md:text-sm font-medium">
             Total de Despesas
           </CardTitle>
           <TrendingDown className="h-4 w-4 text-red-600" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold text-red-600">
+          <div className="text-xl md:text-2xl font-bold text-red-600">
             {formatCurrency(stats.totalDespesas)}
           </div>
           <p className="text-xs text-muted-foreground">
@@ -52,15 +52,15 @@ export function DashboardStats({ stats }: DashboardStatsProps) {
         </CardContent>
       </Card>
 
-      <Card className="border-l-4" style={{ borderLeftColor: '#7209b7' }}>
+      <Card className="border-l-4 w-full max-w-full" style={{ borderLeftColor: '#7209b7' }}>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">
+          <CardTitle className="text-xs md:text-sm font-medium">
             Despesas Fixas
           </CardTitle>
           <TrendingDown className="h-4 w-4" style={{ color: '#7209b7' }} />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold" style={{ color: '#7209b7' }}>
+          <div className="text-xl md:text-2xl font-bold" style={{ color: '#7209b7' }}>
             {formatCurrency(stats.despesasFixas)}
           </div>
           <p className="text-xs text-muted-foreground">
@@ -69,15 +69,15 @@ export function DashboardStats({ stats }: DashboardStatsProps) {
         </CardContent>
       </Card>
 
-      <Card className="border-l-4" style={{ borderLeftColor: '#f72585' }}>
+      <Card className="border-l-4 w-full max-w-full" style={{ borderLeftColor: '#f72585' }}>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">
+          <CardTitle className="text-xs md:text-sm font-medium">
             Despesas Variáveis
           </CardTitle>
           <TrendingDown className="h-4 w-4" style={{ color: '#f72585' }} />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold" style={{ color: '#f72585' }}>
+          <div className="text-xl md:text-2xl font-bold" style={{ color: '#f72585' }}>
             {formatCurrency(stats.despesasVariaveis)}
           </div>
           <p className="text-xs text-muted-foreground">
@@ -86,15 +86,15 @@ export function DashboardStats({ stats }: DashboardStatsProps) {
         </CardContent>
       </Card>
 
-      <Card className="border-l-4 border-l-primary">
+      <Card className="border-l-4 border-l-primary w-full max-w-full">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">
+          <CardTitle className="text-xs md:text-sm font-medium">
             Saldo Atual
           </CardTitle>
           <DollarSign className="h-4 w-4 text-primary" />
         </CardHeader>
         <CardContent>
-          <div className={`text-2xl font-bold ${stats.saldo >= 0 ? 'text-primary' : 'text-red-600'}`}>
+          <div className={`text-xl md:text-2xl font-bold ${stats.saldo >= 0 ? 'text-primary' : 'text-red-600'}`}>
             {formatCurrency(stats.saldo)}
           </div>
           <p className="text-xs text-muted-foreground">
