@@ -20,7 +20,6 @@ export type Database = {
           id: string
           nome: string
           tags: string | null
-          tipo_despesa: string | null
           updated_at: string
           userid: string
         }
@@ -29,7 +28,6 @@ export type Database = {
           id?: string
           nome: string
           tags?: string | null
-          tipo_despesa?: string | null
           updated_at?: string
           userid: string
         }
@@ -38,7 +36,6 @@ export type Database = {
           id?: string
           nome?: string
           tags?: string | null
-          tipo_despesa?: string | null
           updated_at?: string
           userid?: string
         }
@@ -145,7 +142,6 @@ export type Database = {
           id: number
           quando: string | null
           tipo: string | null
-          tipo_despesa: string | null
           userid: string | null
           valor: number | null
         }
@@ -157,7 +153,6 @@ export type Database = {
           id?: never
           quando?: string | null
           tipo?: string | null
-          tipo_despesa?: string | null
           userid?: string | null
           valor?: number | null
         }
@@ -169,7 +164,6 @@ export type Database = {
           id?: never
           quando?: string | null
           tipo?: string | null
-          tipo_despesa?: string | null
           userid?: string | null
           valor?: number | null
         }
@@ -192,22 +186,7 @@ export type Database = {
       }
     }
     Views: {
-      view_despesas_por_tipo: {
-        Row: {
-          mes: string | null
-          soma_valor: number | null
-          tipo_despesa: string | null
-          total_registros: number | null
-        }
-        Relationships: []
-      }
-      view_despesas_totais_mes_atual: {
-        Row: {
-          tipo_despesa: string | null
-          total_mes: number | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
       [_ in never]: never
