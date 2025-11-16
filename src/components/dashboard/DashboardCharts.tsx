@@ -70,8 +70,8 @@ export function DashboardCharts({ transacoes }: DashboardChartsProps) {
 
     return [
       { name: 'Receitas', value: receitas, fill: '#22c55e' },
-      { name: 'Despesas\nFixas', value: Math.abs(despesasFixas), fill: '#7209b7' },
-      { name: 'Despesas\nVariáveis', value: Math.abs(despesasVariaveis), fill: '#f72585' }
+      { name: 'Despesas Fixas', value: Math.abs(despesasFixas), fill: '#7209b7' },
+      { name: 'Despesas Variáveis', value: Math.abs(despesasVariaveis), fill: '#f72585' }
     ]
   }
 
