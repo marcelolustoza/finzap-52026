@@ -449,6 +449,16 @@ export default function Transacoes() {
                       <Badge variant={transacao.tipo === 'receita' ? 'default' : 'destructive'}>
                         {transacao.tipo}
                       </Badge>
+                      {transacao.tipo === 'despesa' && transacao.tipo_despesa && (
+                        <Badge 
+                          style={{ 
+                            backgroundColor: transacao.tipo_despesa === 'fixa' ? '#7209b7' : '#f72585',
+                            color: 'white'
+                          }}
+                        >
+                          {transacao.tipo_despesa === 'fixa' ? 'Fixa' : 'Variável'}
+                        </Badge>
+                      )}
                     </div>
                     <div className="text-sm text-muted-foreground space-y-1">
                       {transacao.categorias && (

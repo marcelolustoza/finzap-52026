@@ -128,16 +128,16 @@ export function DashboardCharts({ transacoes }: DashboardChartsProps) {
             </CardDescription>
           </CardHeader>
           <CardContent className="pl-0">
-            <ChartContainer config={chartConfig} className="h-[450px]">
+            <ChartContainer config={chartConfig} className="h-[350px] md:h-[450px]">
               <ResponsiveContainer width="100%" height="100%">
-                <PieChart margin={{ top: 10, right: 50, left: -50, bottom: 10 }}>
+                <PieChart margin={{ top: 5, right: 50, left: -60, bottom: 5 }}>
                   <Pie
                     data={getPieData()}
-                    cx="30%"
-                    cy="50%"
+                    cx="25%"
+                    cy="35%"
                     labelLine={false}
                     label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                    outerRadius={90}
+                    outerRadius={70}
                     dataKey="value"
                   >
                     {getPieData().map((entry, index) => (

@@ -58,9 +58,22 @@ export function ReportTable({ transactions }: ReportTableProps) {
                       {transaction.categorias?.nome || 'Sem categoria'}
                     </TableCell>
                     <TableCell className="text-xs md:text-sm">
-                      <Badge variant={transaction.tipo === 'receita' ? 'default' : 'destructive'} className="text-xs">
-                        {transaction.tipo}
-                      </Badge>
+                      <div className="flex flex-col gap-1">
+                        <Badge variant={transaction.tipo === 'receita' ? 'default' : 'destructive'} className="text-xs">
+                          {transaction.tipo}
+                        </Badge>
+                        {transaction.tipo === 'despesa' && transaction.tipo_despesa && (
+                          <Badge 
+                            style={{ 
+                              backgroundColor: transaction.tipo_despesa === 'fixa' ? '#7209b7' : '#f72585',
+                              color: 'white'
+                            }}
+                            className="text-xs"
+                          >
+                            {transaction.tipo_despesa === 'fixa' ? 'Fixa' : 'Variável'}
+                          </Badge>
+                        )}
+                      </div>
                     </TableCell>
                     <TableCell className={`text-right font-medium text-xs md:text-sm whitespace-nowrap ${
                       transaction.tipo === 'receita' ? 'text-green-600' : 'text-red-600'
