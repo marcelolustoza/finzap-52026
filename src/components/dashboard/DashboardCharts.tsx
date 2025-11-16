@@ -70,8 +70,8 @@ export function DashboardCharts({ transacoes }: DashboardChartsProps) {
 
     return [
       { name: 'Receitas', value: receitas, fill: '#22c55e' },
-      { name: 'Despesas Fixas', value: Math.abs(despesasFixas), fill: '#7209b7' },
-      { name: 'Despesas Variáveis', value: Math.abs(despesasVariaveis), fill: '#f72585' }
+      { name: 'Despesas\nFixas', value: Math.abs(despesasFixas), fill: '#7209b7' },
+      { name: 'Despesas\nVariáveis', value: Math.abs(despesasVariaveis), fill: '#f72585' }
     ]
   }
 
@@ -150,18 +150,10 @@ export function DashboardCharts({ transacoes }: DashboardChartsProps) {
                       verticalAlign="middle" 
                       align="right"
                       iconType="circle"
-                      formatter={(value) => {
-                        if (value === 'Despesas Fixas') {
-                          return <div style={{ lineHeight: '1.2' }}>Despesas<br/>Fixas</div>
-                        }
-                        if (value === 'Despesas Variáveis') {
-                          return <div style={{ lineHeight: '1.2' }}>Despesas<br/>Variáveis</div>
-                        }
-                        return value
-                      }}
                       wrapperStyle={{ 
                         paddingLeft: '10px',
-                        fontSize: '12px'
+                        fontSize: '12px',
+                        whiteSpace: 'pre-line'
                       }}
                     />
                     <ChartTooltip content={<ChartTooltipContent />} />
