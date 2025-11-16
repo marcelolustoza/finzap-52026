@@ -70,8 +70,8 @@ export function DashboardCharts({ transacoes }: DashboardChartsProps) {
 
     return [
       { name: 'Receitas', value: receitas, fill: '#22c55e' },
-      { name: 'Despesas Fixas', value: Math.abs(despesasFixas), fill: '#7209b7' },
-      { name: 'Despesas Variáveis', value: Math.abs(despesasVariaveis), fill: '#f72585' }
+      { name: 'Despesas\nFixas', value: Math.abs(despesasFixas), fill: '#7209b7' },
+      { name: 'Despesas\nVariáveis', value: Math.abs(despesasVariaveis), fill: '#f72585' }
     ]
   }
 
@@ -128,8 +128,44 @@ export function DashboardCharts({ transacoes }: DashboardChartsProps) {
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col items-center pt-2">
-            <div className="w-full max-w-[100%] md:max-w-[450px]">
-              <ChartContainer config={chartConfig} className="h-[320px] md:h-[400px]">
+            {/* Mobile */}
+            <div className="w-full md:hidden">
+              <ChartContainer config={chartConfig} className="h-[320px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart margin={{ top: 10, right: 20, left: 0, bottom: 10 }}>
+                    <Pie
+                      data={getPieData()}
+                      cx="45%"
+                      cy="45%"
+                      labelLine={false}
+                      label={({ percent }) => `${(percent * 100).toFixed(0)}%`}
+                      outerRadius="55%"
+                      dataKey="value"
+                    >
+                      {getPieData().map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.fill} />
+                      ))}
+                    </Pie>
+                    <Legend 
+                      layout="vertical" 
+                      verticalAlign="middle" 
+                      align="right"
+                      iconType="circle"
+                      wrapperStyle={{ 
+                        paddingLeft: '8px',
+                        fontSize: '10px',
+                        whiteSpace: 'pre-line',
+                        lineHeight: '1.3'
+                      }}
+                    />
+                    <ChartTooltip content={<ChartTooltipContent />} />
+                  </PieChart>
+                </ResponsiveContainer>
+              </ChartContainer>
+            </div>
+            {/* Desktop */}
+            <div className="w-full hidden md:block">
+              <ChartContainer config={chartConfig} className="h-[400px]">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart margin={{ top: 10, right: 80, left: 0, bottom: 10 }}>
                     <Pie
@@ -137,7 +173,7 @@ export function DashboardCharts({ transacoes }: DashboardChartsProps) {
                       cx="30%"
                       cy="45%"
                       labelLine={false}
-                      label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                      label={({ percent }) => `${(percent * 100).toFixed(0)}%`}
                       outerRadius="65%"
                       dataKey="value"
                     >
@@ -153,7 +189,8 @@ export function DashboardCharts({ transacoes }: DashboardChartsProps) {
                       wrapperStyle={{ 
                         paddingLeft: '10px',
                         fontSize: '11px',
-                        whiteSpace: 'pre-line'
+                        whiteSpace: 'pre-line',
+                        lineHeight: '1.4'
                       }}
                     />
                     <ChartTooltip content={<ChartTooltipContent />} />
