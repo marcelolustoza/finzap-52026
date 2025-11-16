@@ -150,6 +150,15 @@ export function DashboardCharts({ transacoes }: DashboardChartsProps) {
                       verticalAlign="middle" 
                       align="right"
                       iconType="circle"
+                      formatter={(value) => {
+                        if (value === 'Despesas Fixas') {
+                          return <div style={{ lineHeight: '1.2' }}>Despesas<br/>Fixas</div>
+                        }
+                        if (value === 'Despesas Variáveis') {
+                          return <div style={{ lineHeight: '1.2' }}>Despesas<br/>Variáveis</div>
+                        }
+                        return value
+                      }}
                       wrapperStyle={{ 
                         paddingLeft: '10px',
                         fontSize: '12px'
