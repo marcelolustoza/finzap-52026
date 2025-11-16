@@ -131,14 +131,14 @@ export function DashboardCharts({ transacoes }: DashboardChartsProps) {
             <div className="w-full max-w-[100%] md:max-w-[450px]">
               <ChartContainer config={chartConfig} className="h-[320px] md:h-[400px]">
                 <ResponsiveContainer width="100%" height="100%">
-                  <PieChart margin={{ top: 10, right: 10, left: 10, bottom: 10 }}>
+                  <PieChart margin={{ top: 10, right: 80, left: 0, bottom: 10 }}>
                     <Pie
                       data={getPieData()}
-                      cx="50%"
+                      cx="30%"
                       cy="45%"
                       labelLine={false}
                       label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                      outerRadius="75%"
+                      outerRadius="65%"
                       dataKey="value"
                     >
                       {getPieData().map((entry, index) => (
@@ -152,7 +152,7 @@ export function DashboardCharts({ transacoes }: DashboardChartsProps) {
                       iconType="circle"
                       wrapperStyle={{ 
                         paddingLeft: '10px',
-                        fontSize: '12px',
+                        fontSize: '11px',
                         whiteSpace: 'pre-line'
                       }}
                     />
