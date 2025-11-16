@@ -127,18 +127,18 @@ export function DashboardCharts({ transacoes }: DashboardChartsProps) {
               Distribuição entre receitas, despesas fixas e variáveis
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex flex-col items-center">
-            <div className="w-full max-w-[100%] md:max-w-[480px]">
-              <ChartContainer config={chartConfig} className="h-[350px] md:h-[450px]">
+          <CardContent className="flex flex-col items-center pt-2">
+            <div className="w-full max-w-[100%] md:max-w-[450px]">
+              <ChartContainer config={chartConfig} className="h-[320px] md:h-[400px]">
                 <ResponsiveContainer width="100%" height="100%">
-                  <PieChart margin={{ top: 20, right: 20, left: 20, bottom: 20 }}>
+                  <PieChart margin={{ top: 10, right: 10, left: 10, bottom: 10 }}>
                     <Pie
                       data={getPieData()}
                       cx="50%"
-                      cy="50%"
+                      cy="45%"
                       labelLine={false}
                       label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                      outerRadius="70%"
+                      outerRadius="75%"
                       dataKey="value"
                     >
                       {getPieData().map((entry, index) => (
